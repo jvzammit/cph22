@@ -1,0 +1,9 @@
+<html>
+<body>
+  <h2>What we're baking</h2>
+  {% for pizza in pizzas %}
+  <p><b>{{ pizza.name|title }}</b>{% if pizza.is_vegan %} (VG){% endif %}{% if pizza.is_vegetarian %} (V){% endif %}&nbsp;&nbsp;€{{ pizza.price }}</p>
+  <p style="padding-bottom: 1em;">{% for topping in pizza.toppings.all %}{{ topping.name }}{% if not forloop.last %}, {% endif %}{% endfor toppings %}</p>
+  {% endfor pizzas %}
+</body>
+</html>
