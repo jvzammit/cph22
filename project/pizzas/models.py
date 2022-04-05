@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Case, Max, Value, When
+from django.db.models import Case, OuterRef, Subquery, Value, When
 
 
 class Topping(models.Model):
@@ -20,11 +20,17 @@ class Topping(models.Model):
 
 class PizzaManager(models.Manager):
     def get_queryset(self):
+        max_rating_subquery = (
+            Pizza.toppings.through.objects.filter(pizza_id=OuterRef("id"))
+            .values("topping__rating")
+            .order_by("-topping__rating")[:1]
+            .values_list("topping__rating", flat=True)
+        )
         return (
             super()
             .get_queryset()
             .annotate(
-                max_rating=Max("toppings__rating"),
+                max_rating=Subquery(max_rating_subquery),
                 is_vegan=Case(
                     When(max_rating=Topping.VEGAN, then=Value(True)),
                     default=Value(False),
