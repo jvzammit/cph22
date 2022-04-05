@@ -5,6 +5,7 @@ from pizzas.models import Topping
 def load_data():
     vegan_topping = recipe.Recipe("pizzas.Topping", rating=Topping.VEGAN)
     veggy_topping = recipe.Recipe("pizzas.Topping", rating=Topping.VEGETARIAN)
+    non_vg_non_v_topping = recipe.Recipe("pizzas.Topping", rating=Topping.NON_VG_NON_V)
 
     # toppings
 
@@ -18,8 +19,8 @@ def load_data():
     mozzarella = veggy_topping.make(name="mozzarella")
     egg = veggy_topping.make(name="egg")
 
-    ham = baker.make("pizzas.Topping", name="ham")
-    pepperoni = baker.make("pizzas.Topping", name="pepperoni")
+    ham = non_vg_non_v_topping.make(name="ham")
+    pepperoni = non_vg_non_v_topping.make(name="pepperoni")
 
     # pizzas
 
