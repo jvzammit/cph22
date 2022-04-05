@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  db:
+    image: "postgres:10.19"
+    container_name: "cph22_postgres"
+    environment:
+      POSTGRES_PASSWORD: "tiger"
+    ports:
+      - "54320:5432"
+    volumes:
+      - cph22_postgres_data:/var/lib/postgresql/data
+volumes:
+  cph22_postgres_data:
